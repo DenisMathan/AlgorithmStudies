@@ -2,8 +2,7 @@ class Pathfinder:
 
     def belmanFord(self, nodes, edges, start, end):
         nodes[start].weight = 0
-        while True:
-            update = False
+        for i in range(len(nodes)):
             for edge in edges:
                 parentWeight = nodes[edge.parent[0]].weight
                 childWeight = nodes[edge.child[0]].weight
@@ -12,15 +11,18 @@ class Pathfinder:
                     newWeight = parentWeight + edge.weight
                     path = nodes[edge.parent[0]].path + [nodes[edge.child[0]].name]
                     if oldWeight == None or oldWeight > newWeight:
-                        # print(edge.parent[0] + " " + edge.child[0])
-                        # print(oldWeight)
-                        # print(newWeight)
                         nodes[edge.child[0]].weight = newWeight
                         nodes[edge.child[0]].path = path
 
-                        update = True
-            if update: break
+        for edge in edges:
+                parentWeight = nodes[edge.parent[0]].weight
+                childWeight = nodes[edge.child[0]].weight
+                if(parentWeight + edge.weight < childWeight):
+                    print("negative Circle!")
+                    return
         print(nodes[end].path)
+    
+     
 
     def dijkstra(self, nodes, start, end):
         nodes = nodes.copy()
